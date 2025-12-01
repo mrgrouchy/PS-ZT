@@ -1,0 +1,45 @@
+description_fix
+
+
+👉 Put this into Update task details → Description → Expression tab
+
+Replace only the column names if yours differ.
+
+if(
+  greater(
+    length(
+      concat(
+        'Title: ', items('Apply_to_each')?['Task Title'], '\n',
+        'Category: ', items('Apply_to_each')?['Category'], '\n',
+        'Risk: ', items('Apply_to_each')?['Risk'], '\n',
+        'Impact: ', items('Apply_to_each')?['Impact'], '\n',
+        'Effort: ', items('Apply_to_each')?['Implementation Cost'], '\n',
+        'Summary: ', items('Apply_to_each')?['Result Summary'], '\n\n',
+        'Details: ', items('Apply_to_each')?['Description']
+      )
+    ),
+    32760
+  ),
+  substring(
+    concat(
+      'Title: ', items('Apply_to_each')?['Task Title'], '\n',
+      'Category: ', items('Apply_to_each')?['Category'], '\n',
+      'Risk: ', items('Apply_to_each')?['Risk'], '\n',
+      'Impact: ', items('Apply_to_each')?['Impact'], '\n',
+      'Effort: ', items('Apply_to_each')?['Implementation Cost'], '\n',
+      'Summary: ', items('Apply_to_each')?['Result Summary'], '\n\n',
+      'Details: ', items('Apply_to_each')?['Description']
+    ),
+    0,
+    32760
+  ),
+  concat(
+    'Title: ', items('Apply_to_each')?['Task Title'], '\n',
+    'Category: ', items('Apply_to_each')?['Category'], '\n',
+    'Risk: ', items('Apply_to_each')?['Risk'], '\n',
+    'Impact: ', items('Apply_to_each')?['Impact'], '\n',
+    'Effort: ', items('Apply_to_each')?['Implementation Cost'], '\n',
+    'Summary: ', items('Apply_to_each')?['Result Summary'], '\n\n',
+    'Details: ', items('Apply_to_each')?['Description']
+  )
+)
