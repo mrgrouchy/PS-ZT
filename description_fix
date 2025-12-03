@@ -5,41 +5,27 @@ description_fix
 
 Replace only the column names if yours differ.
 
-if(
-  greater(
-    length(
-      concat(
-        'Title: ', items('Apply_to_each')?['Task Title'], '\n',
-        'Category: ', items('Apply_to_each')?['Category'], '\n',
-        'Risk: ', items('Apply_to_each')?['Risk'], '\n',
-        'Impact: ', items('Apply_to_each')?['Impact'], '\n',
-        'Effort: ', items('Apply_to_each')?['Implementation Cost'], '\n',
-        'Summary: ', items('Apply_to_each')?['Result Summary'], '\n\n',
-        'Details: ', items('Apply_to_each')?['Description']
-      )
-    ),
-    32760
-  ),
-  substring(
+concat(
+  '**Title**: ', item()?['Task Title'], decodeUriComponent('%0A'),
+  '**Category**: ', item()?['Category'], decodeUriComponent('%0A'),
+  '**Risk**: ', item()?['Risk'], decodeUriComponent('%0A'),
+  '**Impact**: ', item()?['Impact'], decodeUriComponent('%0A'),
+  '**Effort**: ', item()?['Implementation Cost'], decodeUriComponent('%0A'),
+  decodeUriComponent('%0A'),
+  '**Summary**', decodeUriComponent('%0A'),
+  item()?['Result Summary'], decodeUriComponent('%0A'), decodeUriComponent('%0A'),
+  '**Details**', decodeUriComponent('%0A'),
+  if(
+    greater(length(item()?['Description']), 20000),
     concat(
-      'Title: ', items('Apply_to_each')?['Task Title'], '\n',
-      'Category: ', items('Apply_to_each')?['Category'], '\n',
-      'Risk: ', items('Apply_to_each')?['Risk'], '\n',
-      'Impact: ', items('Apply_to_each')?['Impact'], '\n',
-      'Effort: ', items('Apply_to_each')?['Implementation Cost'], '\n',
-      'Summary: ', items('Apply_to_each')?['Result Summary'], '\n\n',
-      'Details: ', items('Apply_to_each')?['Description']
+      substring(item()?['Description'], 0, 20000),
+      decodeUriComponent('%0A'), decodeUriComponent('%0A'),
+      '[⚠️ **TRUNCATED** – full content available in Excel/SharePoint]'
     ),
-    0,
-    32760
+    item()?['Description']
   ),
-  concat(
-    'Title: ', items('Apply_to_each')?['Task Title'], '\n',
-    'Category: ', items('Apply_to_each')?['Category'], '\n',
-    'Risk: ', items('Apply_to_each')?['Risk'], '\n',
-    'Impact: ', items('Apply_to_each')?['Impact'], '\n',
-    'Effort: ', items('Apply_to_each')?['Implementation Cost'], '\n',
-    'Summary: ', items('Apply_to_each')?['Result Summary'], '\n\n',
-    'Details: ', items('Apply_to_each')?['Description']
-  )
+  decodeUriComponent('%0A'), decodeUriComponent('%0A'),
+  '[Open full record in Excel/SharePoint](',
+  item()?['Item URL'],
+  ')'
 )
